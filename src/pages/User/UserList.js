@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { fetchDataFromApi } from "../../services/httpRequestService";
+import { fetchDataFromApi,deleteDatafromApi } from "../../services/httpRequestService";
 import { Space, Table, Tag } from 'antd';
 import { Breadcrumb } from 'antd';
 
@@ -42,28 +42,27 @@ export default function UserList({}) {
       {
         title: 'Action',
         key: 'action',
-        render: (_, record) => (
-          <Space size="middle">
-            <a>Invite {record.name}</a>
-            <a>Delete</a>
-          </Space>
-        ),
+        render: (text, record) => {
+          return (
+              <div>
+
+                 <button  onClick={() => deleteItem(record.id)}>Delete</button>
+
+              </div>
+          );
+      },
       },
     ];
 
    const getUserData = async()=>{
     const dataList = await fetchDataFromApi();
     console.log("dataList",dataList);
-    setTableData(dataList);
-    // axios({
-    //   method: 'GET',
-    //   url: 'http://localhost:5000/users',
-    //   responseType: 'stream'
-    // })
-    //   .then(function (response) {
-       
-    //   });
+    setTableData(dataList);    
    } 
+   const deleteItem = async(id)=>{
+    await deleteDatafromApi(id);
+    getUserData();
+   }
     return (
         <div>
            <Breadcrumb
