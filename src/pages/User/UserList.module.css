@@ -1,0 +1,10 @@
+.inline {
+  border: 1px solid red;
+  margin: 10px;
+  align: center;
+}
+.content {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
