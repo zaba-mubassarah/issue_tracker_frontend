@@ -4,6 +4,7 @@ import {
   fetchDataFromApi,
   deleteDatafromApi,
   saveData,
+  editDataFromApi,
 } from "../../services/httpRequestService";
 
 import { Table, Row, Col, Button, Modal, Input } from "antd";
@@ -18,6 +19,10 @@ export default function UserList({}) {
     name: "",
     age: "",
     gender: "",
+    f_name: "",
+    m_name: "",
+    type: "",
+    address: "",
   });
 
   const [open, setOpen] = useState(false);
@@ -53,7 +58,16 @@ export default function UserList({}) {
       render: (text, record) => {
         return (
           <div>
-            <button onClick={() => deleteItem(record.id)}>Delete</button>
+            <Button
+              onClick={() => editItem(record.id, record)}
+              type="primary"
+              style={{ marginRight: 3 }}
+            >
+              Edit
+            </Button>
+            <Button onClick={() => deleteItem(record.id)} type="primary" danger>
+              Delete
+            </Button>
           </div>
         );
       },
@@ -76,6 +90,13 @@ export default function UserList({}) {
     await deleteDatafromApi(id);
     getUserData();
   };
+  const editItem = async (id, data) => {
+    setOpen(true);
+    setData(data);
+    // await editDataFromApi(id, data);
+    // getUserData();
+  };
+
   const onChange = (e) => {
     console.log(e.target.value);
   };
@@ -117,6 +138,7 @@ export default function UserList({}) {
               <Input
                 placeholder="Enter Name"
                 allowClear
+                value={data.name}
                 onChange={(e) => {
                   setData((prev) => ({
                     ...prev,
@@ -131,6 +153,7 @@ export default function UserList({}) {
               <Input
                 placeholder="Enter Age"
                 allowClear
+                value={data.age}
                 onChange={(e) => {
                   setData((prev) => ({
                     ...prev,
@@ -145,6 +168,7 @@ export default function UserList({}) {
               <Input
                 placeholder="Enter Gender"
                 allowClear
+                value={data.gender}
                 onChange={(e) => {
                   setData((prev) => ({
                     ...prev,
@@ -159,6 +183,7 @@ export default function UserList({}) {
               <Input
                 placeholder="Enter fathers name"
                 allowClear
+                value={data.f_name}
                 onChange={(e) => {
                   setData((prev) => ({
                     ...prev,
@@ -173,6 +198,7 @@ export default function UserList({}) {
               <Input
                 placeholder="Enter mothers name"
                 allowClear
+                value={data.m_name}
                 onChange={(e) => {
                   setData((prev) => ({
                     ...prev,
@@ -187,6 +213,7 @@ export default function UserList({}) {
               <Input
                 placeholder="Enter type"
                 allowClear
+                value={data.type}
                 onChange={(e) => {
                   setData((prev) => ({
                     ...prev,
@@ -200,6 +227,7 @@ export default function UserList({}) {
             <div style={style}>
               <Input
                 placeholder="Address"
+                value={data.address}
                 allowClear
                 onChange={(e) => {
                   setData((prev) => ({

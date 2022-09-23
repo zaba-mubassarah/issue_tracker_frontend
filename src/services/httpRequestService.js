@@ -30,3 +30,12 @@ export const deleteDatafromApi = async (id) => {
     return response.data;
   });
 };
+export const editDataFromApi = async (id) => {
+  console.log("id", id);
+  return axios({
+    method: "PATCH",
+    url: `${baseUrl}/users/${id}`,
+  }).then(function (response) {
+    return response.data;
+  });
+};
