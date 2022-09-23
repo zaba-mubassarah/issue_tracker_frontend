@@ -3,9 +3,10 @@ import style from "./UserList.module.css";
 import {
   fetchDataFromApi,
   deleteDatafromApi,
+  saveData,
 } from "../../services/httpRequestService";
 
-import { Space, Table, Row, Col, Button, Modal, Input } from "antd";
+import { Table, Row, Col, Button, Modal, Input } from "antd";
 import { Breadcrumb } from "antd";
 
 export default function UserList({}) {
@@ -18,9 +19,7 @@ export default function UserList({}) {
     age: "",
     gender: "",
   });
-  const [name, setName] = useState("");
-  const [age, setAge] = useState("");
-  const [gender, setGender] = useState("");
+
   const [open, setOpen] = useState(false);
   const columns = [
     {
@@ -68,6 +67,9 @@ export default function UserList({}) {
   };
   const submitData = async () => {
     console.log(data);
+    saveData(data);
+    getUserData();
+    setOpen(false);
   };
   const deleteItem = async (id) => {
     await deleteDatafromApi(id);
@@ -87,11 +89,18 @@ export default function UserList({}) {
         <Breadcrumb.Item>User</Breadcrumb.Item>
       </Breadcrumb>
       <Modal
-        title="Modal 1000px width"
+        title="Add User"
         centered
         open={open}
-        onOk={() => setOpen(false)}
         onCancel={() => setOpen(false)}
+        footer={[
+          <Button key="back" onClick={() => setOpen(false)}>
+            Cancel
+          </Button>,
+          <Button key="submit" type="primary" onClick={submitData}>
+            Submit
+          </Button>,
+        ]}
         width={1000}
       >
         <Row
@@ -144,17 +153,63 @@ export default function UserList({}) {
               />
             </div>
           </Col>
+          <Col className="gutter-row" span={12} style={{ marginBottom: 6 }}>
+            <div style={style}>
+              <Input
+                placeholder="Enter fathers name"
+                allowClear
+                onChange={(e) => {
+                  setData((prev) => ({
+                    ...prev,
+                    f_name: e.target.value,
+                  }));
+                }}
+              />
+            </div>
+          </Col>
           <Col className="gutter-row" span={12}>
             <div style={style}>
               <Input
-                placeholder="input with clear icon"
+                placeholder="Enter mothers name"
                 allowClear
-                onChange={onChange}
+                onChange={(e) => {
+                  setData((prev) => ({
+                    ...prev,
+                    m_name: e.target.value,
+                  }));
+                }}
+              />
+            </div>
+          </Col>
+          <Col className="gutter-row" span={12} style={{ marginBottom: 6 }}>
+            <div style={style}>
+              <Input
+                placeholder="Enter type"
+                allowClear
+                onChange={(e) => {
+                  setData((prev) => ({
+                    ...prev,
+                    type: e.target.value,
+                  }));
+                }}
+              />
+            </div>
+          </Col>
+          <Col className="gutter-row" span={12}>
+            <div style={style}>
+              <Input
+                placeholder="Address"
+                allowClear
+                onChange={(e) => {
+                  setData((prev) => ({
+                    ...prev,
+                    address: e.target.value,
+                  }));
+                }}
               />
             </div>
           </Col>
         </Row>
-        <Button onClick={submitData}>Submit</Button>
       </Modal>
       <Row justify="space-between">
         <Col span={24}>

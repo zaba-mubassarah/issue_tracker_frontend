@@ -5,7 +5,17 @@ export const fetchDataFromApi = async () => {
   return axios({
     method: "GET",
     url: `${baseUrl}/users`,
-    responseType: "stream",
+  }).then(function (response) {
+    return response.data;
+  });
+};
+export const saveData = async (data) => {
+  console.log("data", data);
+
+  return axios({
+    method: "POST",
+    url: `${baseUrl}/users`,
+    data: data,
   }).then(function (response) {
     return response.data;
   });
