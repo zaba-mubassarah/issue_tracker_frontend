@@ -64,7 +64,7 @@ export default function UserList({}) {
   const getUserData = async () => {
     const dataList = await fetchDataFromApi();
     console.log("dataList", dataList);
-    setTableData(dataList);
+    setTableData(dataList.result);
   };
   const submitData = async () => {
     console.log(data);
